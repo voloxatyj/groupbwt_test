@@ -1,17 +1,17 @@
 # groupbwt_test
-#1. Please, open editor that you like.
-#2. After that clone this repo by this link 
+1. Please, open editor that you like.
+2. After that clone this repo by this link 
     #https://github.com/voloxatyj/groupbwt_test.git.
-#3. Check if you have yarn package manager to do this type 
+3. Check if you have yarn package manager to do this type 
     #yarn -v 
     in terminal.
     If don't. I've recommended, just
     #npm install --global yarn
-#4. Then, just write yarn in terminal, you need to install it globally if you not have
-#5. To start the program you need type 
+4. Then, just write yarn in terminal, you need to install it globally if you not have
+5. To start the program you need type 
     #yarn dev 
     in terminal of editor.
-#6. To test type
+6. To test type
     yarn test
 
 Requirements
