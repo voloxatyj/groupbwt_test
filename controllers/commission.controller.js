@@ -3,7 +3,15 @@ import cashIn from '../services/cashIn.js';
 import cashOutLegal from '../services/cashOutLegal.js';
 import cashOutNatural from '../services/cashOutNatural.js';
 
-async function commission(data) {
+async function commission({
+  cashInPercents,
+  maxAmountCashIn,
+  cashOutNaturalPercents,
+  weekLimitCashOutNatural,
+  cashOutLegalPercents,
+  minAmountCashOutLegal,
+  data,
+}) {
   // Add ID for transaction
   const inputData = [...data.map((com, idx) => ({ ...com, id: idx }))];
   let users = [];
@@ -17,7 +25,7 @@ async function commission(data) {
     } = op;
 
     if (type === 'cash_in') {
-      return cashIn(amount);
+      return cashIn({ cashInPercents, maxAmountCashIn, amount });
     }
 
     // Get user
@@ -40,11 +48,11 @@ async function commission(data) {
     switch (userType) {
       case 'natural':
         cashOutNatural({
-          amount, users, userID, date,
+          amount, users, userID, date, cashOutNaturalPercents, weekLimitCashOutNatural,
         });
         break;
       case 'juridical':
-        cashOutLegal(amount);
+        cashOutLegal({ amount, cashOutLegalPercents, minAmountCashOutLegal });
         break;
       default:
         break;
