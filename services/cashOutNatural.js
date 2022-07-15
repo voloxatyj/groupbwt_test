@@ -1,7 +1,8 @@
 import { stdout as output } from 'process';
+import rounding from './rounding.js';
 
 // Count fee
-const fee = ({ amount, cashOutNaturalPercents }) => ((amount * cashOutNaturalPercents) / 100).toFixed(2);
+const fee = ({ amount, cashOutNaturalPercents }) => ((amount * cashOutNaturalPercents) / 100);
 
 // Count fee and output it for Cash Out operation and Natural type of person
 function cashOutNatural({
@@ -19,10 +20,11 @@ function cashOutNatural({
 
   // Check if not pass a week and amount greater 1000
   if (conditionOfWeekTime <= 7 && amount > weekLimitCashOutNatural) {
-    return output.write(`${fee({ amount: amount - weekLimitCashOutNatural, cashOutNaturalPercents })}\n`);
+    const result = rounding(fee({ amount: amount - weekLimitCashOutNatural, cashOutNaturalPercents }));
+    return output.write(`${result}\n`);
   }
 
-  return output.write(`${fee({ amount, cashOutNaturalPercents })}\n`);
+  return output.write(`${rounding(fee({ amount, cashOutNaturalPercents }))}\n`);
 }
 
 export default cashOutNatural;
