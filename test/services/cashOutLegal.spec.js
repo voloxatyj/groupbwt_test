@@ -7,10 +7,9 @@ test('cashOutLegal is a function exists', () => {
 });
 
 test('cashOutLegal expected result', () => {
-  const expectedResult = cashOutLegal(300);
-  expect(expectedResult).toEqual(((300 * 0.3) / 100).toFixed(2));
+  cashOutLegal({ amount: 300, cashOutLegalPercents: 0.3, minAmountCashOutLegal: 0.5 });
   output.on('data', async (data) => {
     const stdoutData = await JSON.parse(data.toString());
-    expect(stdoutData).toEqual(expectedResult);
+    expect(stdoutData).toEqual(((300 * 0.3) / 100).toFixed(2));
   });
 });

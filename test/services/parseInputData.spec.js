@@ -1,7 +1,7 @@
 import { test, expect } from '@jest/globals';
 import parseInputData from '../../services/parseInputData.js';
 
-const path = './input.json';
+const path = './test/input.test.json';
 
 test('Testing Promise With Error', () => {
   parseInputData(path).catch((err) => {

@@ -1,4 +1,6 @@
-import { describe, expect, test, beforeEach, afterEach } from '@jest/globals';
+import {
+  describe, expect, test, beforeEach, afterEach,
+} from '@jest/globals';
 import config from '../../config/config.js';
 
 describe('check environmental variables', () => {
@@ -22,12 +24,18 @@ describe('check environmental variables', () => {
   });
 
   test('will receive process.env variables', () => {
-    process.env.app = 'dev';
-    process.env.host = 'localhost';
-    process.env.port = '3000';
+    process.env.APP = 'dev';
+    process.env.HOST = 'localhost';
+    process.env.PORT = '3000';
+    process.env.cashInAPI = 'https://private-2f0dd-paysera.apiary-mock.com/cash-in';
+    process.env.cashOutNaturalAPI = 'https://private-2f0dd-paysera.apiary-mock.com/cash-out-natural';
+    process.env.cashOutLegalAPI = 'https://private-2f0dd-paysera.apiary-mock.com/cash-out-juridical';
 
     expect(config.app).toEqual('dev');
     expect(config.host).toEqual('localhost');
     expect(config.port).toEqual('3000');
+    expect(config.cashInAPI).toEqual('https://private-2f0dd-paysera.apiary-mock.com/cash-in');
+    expect(config.cashOutNaturalAPI).toEqual('https://private-2f0dd-paysera.apiary-mock.com/cash-out-natural');
+    expect(config.cashOutLegalAPI).toEqual('https://private-2f0dd-paysera.apiary-mock.com/cash-out-juridical');
   });
 });
