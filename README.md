@@ -2,8 +2,7 @@
 1. Please, open editor that you like.
 2. After that clone this repo by this link 
     https://github.com/voloxatyj/groupbwt_test.git.
-3. Check if you have yarn package manager to do this type 
-    #yarn -v 
+3. Check if you have yarn package manager to do this type \nyarn -v\n 
     in terminal.
     If don't. I've recommended, just
     npm install --global yarn
