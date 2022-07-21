@@ -6,7 +6,7 @@
     npm install --global yarn
 4. Then, just write yarn in terminal, you need to install it globally if you not have
 5. To start the program you need type 
-    yarn dev 
+    node app.js input.json
     in terminal of editor.
 6. To test type
     yarn test

@@ -1,18 +1,10 @@
-import https from 'https';
+import axios from 'axios';
 
-async function getConfigurationAPI(path) {
-  const res = await new Promise((resolve) => {
-    https.get(path, resolve);
-  });
-
-  const response = await new Promise((resolve, reject) => {
-    let data = '';
-    res.on('data', (chunk) => { data += chunk; });
-    res.on('error', (err) => reject(err));
-    res.on('end', () => resolve(data));
-  });
-
-  return JSON.parse(response);
+export default async function getConfigurationAPI(path) {
+  try {
+    const data = await axios.get(path);
+    return data;
+  } catch (error) {
+    return error;
+  }
 }
-
-export default getConfigurationAPI;

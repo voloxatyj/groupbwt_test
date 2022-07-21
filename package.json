@@ -11,7 +11,11 @@
   "jest": {
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
-    }
+    },
+    "roots": [
+    "__test__",
+    "/home/scimus/Projects/groupbwt_test/__test__"
+    ]
   },
   "type": "module",
   "author": "Medynskyi Ostap",
@@ -29,6 +33,7 @@
   },
   "dependencies": {
     "@jest/globals": "^28.1.3",
+    "axios": "^0.27.2",
     "dotenv": "^16.0.1"
   }
 }

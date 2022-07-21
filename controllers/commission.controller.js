@@ -12,53 +12,41 @@ async function commission({
   minAmountCashOutLegal,
   data,
 }) {
-  // Add ID for transaction
-  const inputData = [...data.map((com, idx) => ({ ...com, id: idx }))];
-  let users = [];
-  // Get transactions only for natural person and cash_out type
-  let leftCommissions = [...inputData.filter((com) => com.type === 'cash_out' && com.user_type === 'natural')];
-
+  const results = [];
+  let history = [];
+  let historyLimit = [];
+  let result = null;
   // Itterate all transactions
-  inputData.map((op) => {
+  data.map((op) => {
     const {
-      user_type: userType, type, operation: { amount }, date, user_id: userID, id,
+      user_type: userType, type, operation: { amount }, date, user_id,
     } = op;
 
     if (type === 'cash_in') {
-      return cashIn({ cashInPercents, maxAmountCashIn, amount });
+      return results.push(cashIn({ cashInPercents, maxAmountCashIn, amount }));
     }
 
-    // Get user
-    const user = users.find((u) => u.userID === userID);
-    // Remove transaction that we already count fee
-    leftCommissions = leftCommissions.filter((com) => com.id !== id);
-    // Check if it the last operation of user
-    const lastCommissionUser = leftCommissions.find((com) => com.user_id === userID);
-
-    if (!lastCommissionUser && userType === 'natural') {
-      return output.write('0.00\n');
+    if (userType === 'natural') {
+      ({ history, result } = cashOutNatural({
+        amount,
+        cashOutNaturalPercents,
+        date,
+        user_id,
+        weekLimitCashOutNatural,
+        historyLimit,
+      }));
+      historyLimit = [...history];
+      return results.push(result);
     }
 
-    if (user) {
-      user.amount += amount;
-    } else if (userType === 'natural') {
-      users = [...users, { userID, date, amount }];
-    }
-
-    switch (userType) {
-      case 'natural':
-        cashOutNatural({
-          amount, users, userID, date, cashOutNaturalPercents, weekLimitCashOutNatural,
-        });
-        break;
-      case 'juridical':
-        cashOutLegal({ amount, cashOutLegalPercents, minAmountCashOutLegal });
-        break;
-      default:
-        break;
+    if (userType === 'juridical') {
+      return results.push(cashOutLegal({
+        amount, cashOutLegalPercents, minAmountCashOutLegal,
+      }));s
     }
   });
-  process.kill(process.pid, 'SIGTERM');
+  results.forEach((res) => output.write(`${res}\n`));
+  output.write('Counting commission finish successfully!\n');
 }
 
 export default commission;

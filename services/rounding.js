@@ -1,5 +1,5 @@
 // Round number in example 0.023 to 0.03
-function rounding(fee) {
+export default function rounding(fee) {
   if (fee % 1) {
     const num = `${fee}`.split('.');
     if (num[1][2] > 1) {
@@ -10,5 +10,3 @@ function rounding(fee) {
   }
   return fee.toFixed(2);
 }
-
-export default rounding;

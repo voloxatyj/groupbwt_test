@@ -2,29 +2,30 @@ import config from '../config/config.js';
 import getConfigurationAPI from '../services/getConfigurationAPI.js';
 import parseInputData from '../services/parseInputData.js';
 import commission from './commission.controller.js';
-import getPath from '../services/getPath.js';
+import isFileExist from '../services/isFileExist.js';
 
 async function start() {
-  const path = await getPath();
-  // parse json file
-  const data = await parseInputData(path);
   const { cashInAPI, cashOutNaturalAPI, cashOutLegalAPI } = config;
+  const promises = [];
+  promises.push(isFileExist());
+
+  // parse json file
+  promises.push(parseInputData());
+
   // Get configuration for CashIn from API
-  const {
-    percents: cashInPercents,
-    max: { amount: maxAmountCashIn },
-  } = await getConfigurationAPI(cashInAPI);
+  promises.push(getConfigurationAPI(cashInAPI));
+
   // Get configuration for CashOut Natural Person from API
-  const {
-    percents: cashOutNaturalPercents,
-    week_limit: { amount: weekLimitCashOutNatural },
-  } = await getConfigurationAPI(cashOutNaturalAPI);
+  promises.push(getConfigurationAPI(cashOutNaturalAPI));
+
   // Get configuration for CashOut Legal Person from API
-  const {
-    percents: cashOutLegalPercents,
-    min: { amount: minAmountCashOutLegal },
-  } = await getConfigurationAPI(cashOutLegalAPI);
-  // starting to execute commissions on terminal
+  promises.push(getConfigurationAPI(cashOutLegalAPI));
+  const [_, data,
+    {data: { percents: cashInPercents, max: { amount: maxAmountCashIn } }},
+    {data: { percents: cashOutNaturalPercents, week_limit: { amount: weekLimitCashOutNatural } }},
+    {data: { percents: cashOutLegalPercents, min: { amount: minAmountCashOutLegal } }}] = await Promise.all(promises);
+
+  // Starting to execute commissions on terminal
   await commission({
     cashInPercents,
     maxAmountCashIn,
