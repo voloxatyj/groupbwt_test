@@ -13,8 +13,7 @@
       "^.+\\.jsx?$": "babel-jest"
     },
     "roots": [
-    "__test__",
-    "/home/scimus/Projects/groupbwt_test/__test__"
+    "__test__"
     ]
   },
   "type": "module",
