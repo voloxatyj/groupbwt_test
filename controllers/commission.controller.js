@@ -42,7 +42,7 @@ async function commission({
     if (userType === 'juridical') {
       return results.push(cashOutLegal({
         amount, cashOutLegalPercents, minAmountCashOutLegal,
-      }));s
+      }));
     }
   });
   results.forEach((res) => output.write(`${res}\n`));
