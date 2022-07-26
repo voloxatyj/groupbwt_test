@@ -1,4 +1,4 @@
-import rounding from './rounding.js';
+import rounding from '../helpers/rounding.js';
 
 // Count fee and output it for Cash Out operation and Legal type of person
 export default function cashOutLegal({ amount, cashOutLegalPercents, minAmountCashOutLegal }) {

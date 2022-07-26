@@ -1,8 +1,8 @@
 import config from '../config/config.js';
-import getConfigurationAPI from '../services/getConfigurationAPI.js';
-import parseInputData from '../services/parseInputData.js';
 import commission from './commission.controller.js';
-import isFileExist from '../services/isFileExist.js';
+import getConfigurationAPI from '../helpers/getConfigurationAPI.js';
+import parseInputData from '../helpers/parseInputData.js';
+import isFileExist from '../helpers/isFileExist.js';
 
 async function start() {
   const { cashInAPI, cashOutNaturalAPI, cashOutLegalAPI } = config;

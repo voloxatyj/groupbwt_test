@@ -1,20 +1,20 @@
 import mockAxios from "axios";
-import config from '../../config/config.js';
-import getConfigurationAPI from '../../services/getConfigurationAPI.js';
+import config from "../../config/config.js";
+import getConfigurationAPI from "../../helpers/getConfigurationAPI.js";
 
 const { cashInAPI, cashOutNaturalAPI, cashOutLegalAPI } = config;
 
-jest.mock('axios');
+jest.mock("axios");
 
 describe("getcashInAPI", () => {
     describe("when cashInAPI call is successful", () => {
       afterEach(jest.clearAllMocks);
       it("should return config for cashInAPI", async () => {
       const configCashInAPI = {
-        "percents":0.03,
+        "percents": 0.03,
         "max": {
-        "amount":5,
-        "currency":"EUR"
+        "amount": 5,
+        "currency": "EUR"
       }};
 
       mockAxios.get.mockResolvedValueOnce(configCashInAPI);
