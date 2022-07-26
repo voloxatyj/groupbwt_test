@@ -21,7 +21,7 @@ export default function cashOutNatural({
         if (!week_condition) {
           return { ...op, limit };
         }
-        return { ...op, date: week_condition ? date : operation.date, limit };
+        return { ...op, date: week_condition ? date : op.date, limit };
       }
     });
   }
